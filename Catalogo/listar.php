@@ -28,3 +28,22 @@ if (empty($produtos)) {
   echo "</table>";
 }
 ?>
+
+<button onclick="excluirProduto(<?= $p['id'] ?>)">Excluir</button>
+
+<script>
+function excluirProduto(id) {
+    if (!confirm("Deseja excluir?")) return;
+
+    fetch("excluir.php?id=" + id)
+        .then(r => r.text())
+        .then(res => {
+            if (res.trim() === "ok") {
+                location.reload(); // Atualiza a lista sem sair da página
+            } else {
+                alert("Erro: " + res);
+            }
+        })
+        .catch(err => alert("Falha: " + err));
+}
+</script>
